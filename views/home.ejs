@@ -11,24 +11,25 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
         integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <script type="text/javascript" src="../public/app.js"></script>
     <style>
         #board {
-            width: 560px;
+            width: 500px;
             min-height: 500px;
             margin: 5%;
         }
-
         .tile {
-            width: 150px;
-            height: 150px;
-            margin: 10px;
+            width: 140px;
+            height: 140px;
+            margin: 4px;
         }
-
+        .icon{
+            vertical-align: middle;
+        }
         .tile:focus {
             outline: none;
             box-shadow: none;
         }
-
         .fa-star {
             color: orange;
         }
@@ -47,7 +48,7 @@
                         <h3></h3>
                         <form class="form-inline">
                             <div class="form-group">
-                                <select class="form-control" id="size">
+                                <select class="form-control" id="size" onchange="initBoard(this)">
                                     <option value="" disabled selected="selected">Select Grid</option>
                                     <option value="3">3 X 3</option>
                                     <option value="4">4 X 4</option>
@@ -55,7 +56,7 @@
                                     <option value="8">8 X 8</option>
                                 </select>
                             </div>&nbsp;
-                            <button class="btn btn-outline-info">Restart</button>
+                            <button type="button" id="btn_restart" class="btn btn-outline-info" onclick="startGame()" disabled>Restart</button>
                         </form>
                         <h5 class="m-2" id="timer">0 mins 0 secs</h5>
                     </div>
@@ -72,9 +73,10 @@
                 </div>
             </div>
             <div class="card-body bg-dark mx-auto" id="board">
-                <% for(let i = 0; i < 9; i++) { %>
-                    <button class="tile btn btn-secondary" data="<%= i %>" id="show_<%= i %>"><i id="icon_<%= i %>"class="d-none fa fa-play fa-2x"></i></button>
-                <% } %>
+                <!-- <% for(let i=0; i < 9; i++) { %>
+                    <button class="tile btn btn-secondary" data="<%= i %>" id="show_<%= i %>"><i id="icon_<%= i %>"
+                            class="d-none fa fa-play fa-2x"></i></button>
+                    <% } %> -->
             </div>
         </div>
     </div>
