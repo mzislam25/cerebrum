@@ -1,4 +1,4 @@
-let icons = ['user', 'play', 'anchor', 'archive', 'asterisk', 'barcode', 'ban', 'bolt', 'bed', 'battery-full', 'bomb', 'book', 'bus', 'camera', 'clock', 'coffee'];
+let icons = ['user', 'play', 'anchor', 'archive', 'asterisk', 'barcode', 'ban', 'bolt', 'bed', 'battery-full', 'bomb', 'book', 'bus', 'camera', 'clock', 'coffee','phone','music','search','ambulance','train','copyright','fire','heart','home','tree','star','times','cogs','wrench','university','trash'];
 let size = 0;
 let opened = [];
 let move = 0;
@@ -19,7 +19,7 @@ const initBoard = () => {
         let html = '';
         let counter = 0;
         for (let i = 0; i < (size * size); i++) {
-            html += '<button class="tile btn btn-secondary" data="' + counter + '" id="btn_' + i + '" onclick="checkMatch(' + i + ');"><i id="icon_' + i + '" class="d-none icon fa fa-' + icons[counter] + ' fa-2x"></i></button>';
+            html += '<button class="tile btn btn-secondary" data="' + counter + '" id="btn_' + i + '" onclick="checkMatch(' + i + ');"><i id="icon_' + i + '" class="icon fa fa-' + icons[counter] + ' fa-2x"></i></button>';
             if (counter < ((size * size) / 2) - 1) {
                 counter++;
             } else {
