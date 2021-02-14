@@ -59,6 +59,7 @@ const checkMatch = (i) => {
     if (opened.length === 2) {
         move++;
         document.getElementById('move').innerText = move;
+        countRating();
         if (opened[0].data === opened[1].data) {
             showSuccess(opened);
             opened = [];
@@ -111,6 +112,7 @@ const resetBoard = () => {
     total_time_in_sec = 0;
     document.getElementById('timer').innerText = minute + " mins " + second + " secs";
     document.getElementById('move').innerText = move;
+    document.getElementById('rating').innerHTML = '<i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>';
 }
 const startTimer = () => {
     interval = setInterval(() => {
@@ -124,6 +126,17 @@ const startTimer = () => {
             hour++;
             minute = 0;
         }
-        $('#timer').text(((hour > 0) ? hour + " hour" : "") + minute + " mins " + second + " secs");
+        document.getElementById('timer').innerText = ((hour > 0) ? hour + " hour" : "") + minute + " mins " + second + " secs";
     }, 1000);
+}
+
+const countRating = () => {
+    if (move <= (size * size) / 2) {
+        document.getElementById('rating').innerHTML = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>';
+    }
+    else if (move <= (size * size)) {
+        document.getElementById('rating').innerHTML = '<i class="fa fa-star"><i class="fa fa-star"></i><i class="far fa-star"></i>';
+    } else {
+        document.getElementById('rating').innerHTML = '<i class="fa fa-star"><i class="far fa-star"><i class="far fa-star"></i>';
+    }
 }
