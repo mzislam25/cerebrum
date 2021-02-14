@@ -1,5 +1,5 @@
 # Cerebrum: Memory Game
-> simple memory game using nodejs, express and mongoDB along with vanilla js
+> simple memory game using nodejs, express and mongoDB along with vanillajs
 
 ## Quick Start
 ``` bash
