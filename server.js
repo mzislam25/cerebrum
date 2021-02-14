@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const config = require('./shared/config');
 const User = require('./models/UserSchema');
+const Log = require('./models/LogSchema');
 
 const app = express();
 app.use(session({
@@ -17,42 +18,74 @@ app.use('/public', express.static('public'));
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 
-app.get('/home', async (req, res) => {
-    let user = "Guest", user_record = 0;
-    if(req.session.username){
-        try{
-            const userData = await User.findOne({username: req.session.username});
-            user = userData.username;
-            user_record = userData.user_record;
-        }catch(err){console.error(err)}
-    }
-    const minutes = Math.floor(user_record / 60);
-    const seconds = user_record - minutes * 60;
-    const best_record = minutes + " mins " + seconds + " secs";
-    res.render('home', { title: 'Welcome to Cerebrum', user, best_record });
-});
 app.get('/', function (req, res) {
-    res.render('login', { title: 'Login' });
+    res.render('login');
 });
 app.post('/', async (req, res) => {
     const username = req.body.username;
     const email = req.body.email;
-    const user = await User.findOneAndUpdate({ username: username }, { email: email, user_record: 0}, { new: true, upsert: true });
-    req.session.loggedin = true;
-    req.session.username = user.username;
+    try {
+        const user = await User.findOneAndUpdate({ username: username, email: email }, {}, { new: true, upsert: true });
+        if (user) {
+            req.session.loggedin = true;
+            req.session.user = user._id;
+        }
+    } catch (err) { console.error(err); }
     res.redirect('/home');
 });
 
-app.listen(config.PORT, async() => {
+app.get('/home', async (req, res) => {
+    let username = "Guest"; let userId = null;
+    if (req.session.loggedin) {
+        try {
+            const user = await User.findById(req.session.user);
+            if (user) { username = user.username; userId = user._id }
+        } catch (err) { console.error(err) }
+    }
+    res.render('home', { username, userId });
+});
+
+app.post('/home', async (req, res) => {
+    try {
+        const log = new Log(req.body);
+        await log.save();
+        res.redirect('/home');
+    } catch (err) {
+        console.error(err);
+    }
+});
+
+app.get('/record', async (req, res) => {
+    let record = 0;
+    if (req.session.loggedin) {
+        try {
+            const user = await User.findById(req.session.user);
+            if (user) {
+                const userLog = await Log.find({ size: req.query.size, userId: user._id }).sort({ time: 1 }).limit(1);
+                if (userLog[0]) record = userLog[0].time;
+            }
+        } catch (err) { console.error(err) }
+    } else {
+        try {
+            const log = await Log.find({ size: req.query.size }).sort({ time: 1 }).limit(1);
+            if (log[0]) record = log[0].time;
+        } catch (err) { console.error(err) }
+    }
+    const minutes = Math.floor(record / 60);
+    const seconds = record - minutes * 60;
+    res.send(minutes + " mins " + seconds + " secs");
+})
+
+app.listen(config.PORT, async () => {
     console.log(`Server started at port ${config.PORT}`);
-    try{
-        await mongoose.connect(config.MONGODB_URI, { 
+    try {
+        await mongoose.connect(config.MONGODB_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useFindAndModify: false,
-            useCreateIndex: true 
+            useCreateIndex: true
         });
-    }catch(err){
+    } catch (err) {
         console.error(err);
     }
 });

@@ -4,6 +4,7 @@ let opened = [];
 let move = 0;
 let done = 0;
 let click = 0;
+let rating = 3;
 //timer variables
 let total_time_in_sec = 0;
 let second = 0, minute = 0; hour = 0;
@@ -12,6 +13,7 @@ const initBoard = () => {
     resetBoard();
     document.getElementById("btn_restart").removeAttribute("disabled");
     size = Number(document.getElementById('size').value);
+    getRecord(size);
     if (size >= 3) {
         document.getElementById('board').setAttribute("style", "width:" + size * 162 + "px");
         let html = '';
@@ -100,13 +102,18 @@ const showError = (arr) => {
     });
 }
 const endGame = () => {
+    clearInterval(interval);
+    document.getElementById('form_time').value = total_time_in_sec;
+    document.getElementById('form_move').value = move;
+    document.getElementById('form_rating').value = rating;
     setTimeout(() => {
-        alert('Thank You! You are done');
-    }, 1000)
+        alert('Thank You! You are done in ' + total_time_in_sec + ' secs');
+        document.getElementById('form_record').submit();
+    }, 1000);
 }
 
 const resetBoard = () => {
-    opened = [], move = 0, done = 0, click = 0;
+    opened = [], move = 0, done = 0, click = 0; rating = 3;
     clearInterval(interval);
     second = 0, minute = 0; hour = 0;
     total_time_in_sec = 0;
@@ -132,11 +139,24 @@ const startTimer = () => {
 
 const countRating = () => {
     if (move <= (size * size) / 2) {
+        rating = 3;
         document.getElementById('rating').innerHTML = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>';
-    }
-    else if (move <= (size * size)) {
+    } else if (move <= (size * size)) {
+        rating = 2;
         document.getElementById('rating').innerHTML = '<i class="fa fa-star"><i class="fa fa-star"></i><i class="far fa-star"></i>';
     } else {
+        rating = 1;
         document.getElementById('rating').innerHTML = '<i class="fa fa-star"><i class="far fa-star"><i class="far fa-star"></i>';
     }
+}
+
+const getRecord = (size) => {
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            document.getElementById('record').innerText = xmlhttp.responseText;
+        }
+    }
+    xmlhttp.open("GET", "/record?"+"size="+size, true);
+    xmlhttp.send();
 }
