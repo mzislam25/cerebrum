@@ -45,13 +45,14 @@ app.get('/home', async (req, res) => {
     res.render('home', { username, userId });
 });
 
-app.post('/home', async (req, res) => {
+app.post('/record', async (req, res) => {
     try {
         const log = new Log(req.body);
         await log.save();
-        res.redirect('/home');
+        res.send(true);
     } catch (err) {
         console.error(err);
+        res.send(false);
     }
 });
 

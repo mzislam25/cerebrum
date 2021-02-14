@@ -1,4 +1,4 @@
-let icons = ['user', 'play', 'anchor', 'archive', 'asterisk', 'barcode', 'ban', 'bolt', 'bed', 'battery-full', 'bomb', 'book', 'bus', 'camera', 'clock', 'coffee','phone','music','search','ambulance','train','copyright','fire','heart','home','tree','star','times','cogs','wrench','university','trash'];
+let icons = ['user', 'play', 'anchor', 'archive', 'asterisk', 'barcode', 'ban', 'bolt', 'bed', 'battery-full', 'bomb', 'book', 'bus', 'camera', 'clock', 'coffee', 'phone', 'music', 'search', 'ambulance', 'train', 'copyright', 'fire', 'heart', 'home', 'tree', 'star', 'times', 'cogs', 'wrench', 'university', 'trash'];
 let size = 0;
 let opened = [];
 let move = 0;
@@ -19,7 +19,7 @@ const initBoard = () => {
         let html = '';
         let counter = 0;
         for (let i = 0; i < (size * size); i++) {
-            html += '<button class="tile btn btn-secondary" data="' + counter + '" id="btn_' + i + '" onclick="checkMatch(' + i + ');"><i id="icon_' + i + '" class="icon fa fa-' + icons[counter] + ' fa-2x"></i></button>';
+            html += '<button class="tile btn btn-secondary" data="' + counter + '" id="btn_' + i + '" onclick="checkMatch(' + i + ');"><i id="icon_' + i + '" class="d-none icon fa fa-' + icons[counter] + ' fa-2x"></i></button>';
             if (counter < ((size * size) / 2) - 1) {
                 counter++;
             } else {
@@ -103,15 +103,16 @@ const showError = (arr) => {
 }
 const endGame = () => {
     clearInterval(interval);
-    document.getElementById('form_time').value = total_time_in_sec;
-    document.getElementById('form_move').value = move;
-    document.getElementById('form_rating').value = rating;
+    let html = '<p>You take ' + move + ' moves</p>' +
+        '<p>Your time ' + document.getElementById('timer').innerText + '</p>' +
+        '<p>Rating ' + document.getElementById('rating').innerHTML + '</p>';
+    document.getElementById('text').innerHTML = html;
+    postRecord();
     setTimeout(() => {
-        alert('Thank You! You are done in ' + total_time_in_sec + ' secs');
-        document.getElementById('form_record').submit();
+        document.getElementById("popup").classList.toggle("active");
+        // alert('Thank You! You are done in ' + total_time_in_sec + ' secs');
     }, 1000);
 }
-
 const resetBoard = () => {
     opened = [], move = 0, done = 0, click = 0; rating = 3;
     clearInterval(interval);
@@ -157,6 +158,15 @@ const getRecord = (size) => {
             document.getElementById('record').innerText = xmlhttp.responseText;
         }
     }
-    xmlhttp.open("GET", "/record?"+"size="+size, true);
+    xmlhttp.open("GET", "/record?" + "size=" + size, true);
     xmlhttp.send();
+}
+const postRecord = () => {
+    let user = document.getElementById('form_user').value;
+    let params = `size=${size}&userId=${user}&time=${total_time_in_sec}&move=${move}&rating=${rating}`
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/record', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onload = () => { console.log('Saved'); };
+    xhr.send(params);
 }
