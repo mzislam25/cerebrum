@@ -15,7 +15,7 @@ const initBoard = () => {
     size = Number(document.getElementById('size').value);
     getRecord(size);
     if (size >= 3) {
-        document.getElementById('board').setAttribute("style", "width:" + size * 162 + "px");
+        document.getElementById('board').setAttribute("style", "width:" + size * 148 + "px");
         let html = '';
         let counter = 0;
         for (let i = 0; i < (size * size); i++) {
@@ -34,7 +34,7 @@ const startGame = () => {
     const tile = document.getElementsByClassName("tile");
     const tiles = [...tile];
     const arr = shuffleArray(tiles);
-    document.getElementById('board').setAttribute("style", "width:" + size * 162 + "px");
+    document.getElementById('board').setAttribute("style", "width:" + size * 148 + "px");
     let board = document.querySelector('#board');
     for (let i = 0; i < tiles.length; i++) {
         let html = document.querySelector('#' + arr[i].id);
@@ -48,7 +48,6 @@ const shuffleArray = (array) => {
     }
     return array;
 }
-
 const checkMatch = (i) => {
     click++;
     if (click === 1) { startTimer(); }
@@ -75,7 +74,6 @@ const checkMatch = (i) => {
         }
     }
 }
-
 const showSuccess = (arr) => {
     arr.forEach(element => {
         document.getElementById('icon_' + element.id).classList.remove('d-none');
@@ -137,7 +135,6 @@ const startTimer = () => {
         document.getElementById('timer').innerText = ((hour > 0) ? hour + " hour" : "") + minute + " mins " + second + " secs";
     }, 1000);
 }
-
 const countRating = () => {
     if (move <= (size * size) / 2) {
         rating = 3;
