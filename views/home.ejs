@@ -48,7 +48,7 @@
                         <h3></h3>
                         <form class="form-inline">
                             <div class="form-group">
-                                <select class="form-control" id="size" onchange="initBoard(this)">
+                                <select class="form-control" id="size" onchange="initBoard()">
                                     <option value="" disabled selected="selected">Select Grid</option>
                                     <option value="3">3 X 3</option>
                                     <option value="4">4 X 4</option>
@@ -56,7 +56,7 @@
                                     <option value="8">8 X 8</option>
                                 </select>
                             </div>&nbsp;
-                            <button type="button" id="btn_restart" class="btn btn-outline-info" onclick="startGame()" disabled>Restart</button>
+                            <button type="button" id="btn_restart" class="btn btn-outline-info" onclick="initBoard()" disabled>Restart</button>
                         </form>
                         <h5 class="m-2" id="timer">0 mins 0 secs</h5>
                     </div>

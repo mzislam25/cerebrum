@@ -3,9 +3,15 @@ let size = 0;
 let opened = [];
 let move = 0;
 let done = 0;
-const initBoard = (elem) => {
+let click = 0;
+//timer variables
+let total_time_in_sec = 0;
+let second = 0, minute = 0; hour = 0;
+let interval;
+const initBoard = () => {
+    resetBoard();
     document.getElementById("btn_restart").removeAttribute("disabled");
-    size = Number(document.getElementById(elem.id).value);
+    size = Number(document.getElementById('size').value);
     if (size >= 3) {
         document.getElementById('board').setAttribute("style", "width:" + size * 162 + "px");
         let html = '';
@@ -42,6 +48,8 @@ const shuffleArray = (array) => {
 }
 
 const checkMatch = (i) => {
+    click++;
+    if (click === 1) { startTimer(); }
     document.getElementById('icon_' + i).classList.remove('d-none');
     document.getElementById('btn_' + i).classList.remove('btn-secondary');
     document.getElementById('btn_' + i).classList.add('btn-info');
@@ -91,7 +99,31 @@ const showError = (arr) => {
     });
 }
 const endGame = () => {
-    setTimeout(()=>{
+    setTimeout(() => {
         alert('Thank You! You are done');
-    },1000)
+    }, 1000)
+}
+
+const resetBoard = () => {
+    opened = [], move = 0, done = 0, click = 0;
+    clearInterval(interval);
+    second = 0, minute = 0; hour = 0;
+    total_time_in_sec = 0;
+    document.getElementById('timer').innerText = minute + " mins " + second + " secs";
+    document.getElementById('move').innerText = move;
+}
+const startTimer = () => {
+    interval = setInterval(() => {
+        total_time_in_sec++;
+        second++;
+        if (second === 60) {
+            minute++;
+            second = 0;
+        }
+        if (minute === 60) {
+            hour++;
+            minute = 0;
+        }
+        $('#timer').text(((hour > 0) ? hour + " hour" : "") + minute + " mins " + second + " secs");
+    }, 1000);
 }
