@@ -1,0 +1,65 @@
+#board {
+    width: 500px;
+    min-height: 500px;
+    margin: 5%;
+}
+
+.tile {
+    width: 140px;
+    height: 140px;
+    margin: 4px;
+}
+
+.icon {
+    vertical-align: middle;
+}
+
+.tile:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.fa-star {
+    color: orange;
+}
+
+.popup .overlay {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    display: none;
+}
+
+.popup .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: #fff;
+    width: 500px;
+    height: 250px;
+    z-index: 2;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+    font-family: "Open Sans", sans-serif;
+}
+
+.popup .btn_close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.popup.active .overlay {
+    display: block;
+}
+
+.popup.active .content {
+    transition: all 300ms ease-in-out;
+    transform: translate(-50%, -50%) scale(1);
+}

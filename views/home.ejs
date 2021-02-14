@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Memory Game | Cerebrum</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="../public/app.css" type="text/css">
+    <script type="text/javascript" src="../public/app.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="text-center">Welcome to Cerebrum</h1>
+                <div class="row">
+                    <div class="col-md-10">
+                        <h3></h3>
+                        <form id="form_record" class="form-inline" method="POST">
+                            <div class="form-group">
+                                <select class="form-control" id="size" name="size" onchange="initBoard()">
+                                    <option value="" disabled selected="selected">Select Grid</option>
+                                    <option value="3">3 X 3</option>
+                                    <option value="4">4 X 4</option>
+                                    <option value="6">6 X 6</option>
+                                    <option value="8">8 X 8</option>
+                                </select>
+                            </div>&nbsp;
+                            <button type="button" id="btn_restart" class="btn btn-outline-info" onclick="initBoard()"
+                                disabled>Restart</button>
+                            <input type="hidden" id="form_user" name="userId" value="<%= userId %>">
+                        </form>
+                        <h5 class="m-2" id="timer">0 mins 0 secs</h5>
+                    </div>
+                    <div class="col-md-2">
+                        <h5>User: <span id="user">
+                                <%= username %>
+                            </span></h5>
+                        <h5>Best: <span id="record"></span></h5>
+                        <h5><span id="move">0</span> Moves | <span id="rating"></span></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body bg-dark mx-auto" id="board">
+                <!-- <% for(let i=0; i < 9; i++) { %>
+                    <button class="tile btn btn-secondary" data="<%= i %>" id="show_<%= i %>"><i id="icon_<%= i %>"
+                            class="d-none fa fa-play fa-2x"></i></button>
+                    <% } %> -->
+            </div>
+        </div>
+    </div>
+
+    <div class="popup" id="popup">
+        <div class="overlay"></div>
+        <div class="content">
+            <button class="btn btn-secondary btn_close" onclick="document.getElementById('popup').classList.toggle('active');">&times;</button>
+            <h1>Congratulations</h1>
+            <div id="text"></div>
+            <button type="button" class="btn btn-secondary" onclick="document.getElementById('popup').classList.toggle('active'); initBoard()">Play Again</button>
+        </div>
+    </div>
+</body>
+
+</html>
