@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const MemoryStore = require('memorystore')(session);
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const config = require('./shared/config');
@@ -8,10 +9,14 @@ const Log = require('./models/LogSchema');
 
 const app = express();
 app.use(session({
-    secret: 'secret',
-    resave: true,
-    saveUninitialized: true
-}));
+    cookie: { maxAge: 86400000 },
+    store: new MemoryStore({
+        checkPeriod: 86400000
+    }),
+    resave: false,
+    saveUninitialized: true,
+    secret: 'memory'
+}))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/public', express.static('public'));

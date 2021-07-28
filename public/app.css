@@ -1,11 +1,19 @@
-#board {
-    margin: 10px;
-    padding: 0;
+.title{
+    font-size: 50px;
+    font-weight: bold;
+}
+.text{
+    font-size: 17px;
+    font-weight: 600;
 }
 
+#board {
+    margin: 5px;
+    padding: 0;
+}
 .tile {
-    width: 140px;
-    height: 140px;
+    max-width: 140px;
+    max-height: 140px;
     margin: 4px;
 }
 
@@ -61,4 +69,14 @@
 .popup.active .content {
     transition: all 300ms ease-in-out;
     transform: translate(-50%, -50%) scale(1);
+}
+
+@media all and (max-width:568px) {
+    .title{
+        font-size: 20px;
+    }
+    .text{
+        font-size: 13px;
+        font-weight: 500;
+    }
 }

@@ -9,17 +9,27 @@ let rating = 3;
 let total_time_in_sec = 0;
 let second = 0, minute = 0; hour = 0;
 let interval;
+let playgroundWidth=444;
+let tileWidth=140;
 const initBoard = () => {
     resetBoard();
     document.getElementById("btn_restart").removeAttribute("disabled");
+    document.getElementById("playground").classList.remove("d-none");
     size = Number(document.getElementById('size').value);
     getRecord(size);
     if (size >= 3) {
-        document.getElementById('board').setAttribute("style", "width:" + size * 148 + "px");
+        playgroundWidth = document.getElementById("playground").offsetWidth;
+        // console.log(playgroundWidth);
+        tileWidth = (playgroundWidth - (8*size)-8) / size;
+        if(tileWidth > 140){
+            tileWidth = 140;
+        }
+        // console.log(tileWidth);
+        // document.getElementById('board').setAttribute("style", "width:" + playgroundWidth + "px");
         let html = '';
         let counter = 0;
         for (let i = 0; i < (size * size); i++) {
-            html += '<button class="tile btn btn-secondary" data="' + counter + '" id="btn_' + i + '" onclick="checkMatch(' + i + ');"><i id="icon_' + i + '" class="d-none icon fa fa-' + icons[counter] + ' fa-2x"></i></button>';
+            html += '<button class="tile btn btn-secondary" data="' + counter + '" id="btn_' + i + '" style="width:'+tileWidth+'px; height:'+tileWidth+'px" onclick="checkMatch(' + i + ');"><i id="icon_' + i + '" class="d-none icon fa fa-' + icons[counter] + ' fa-2x"></i></button>';
             if (counter < ((size * size) / 2) - 1) {
                 counter++;
             } else {
@@ -32,9 +42,11 @@ const initBoard = () => {
 }
 const startGame = () => {
     const tile = document.getElementsByClassName("tile");
+    // console.log(tile, typeof tile);
     const tiles = [...tile];
+    // console.log(typeof tiles);
     const arr = shuffleArray(tiles);
-    document.getElementById('board').setAttribute("style", "width:" + size * 148 + "px");
+    document.getElementById('board').setAttribute("style", "width:" + ((size * tileWidth)+(size * 8)) + "px");
     let board = document.querySelector('#board');
     for (let i = 0; i < tiles.length; i++) {
         let html = document.querySelector('#' + arr[i].id);
@@ -105,7 +117,7 @@ const endGame = () => {
         '<p>Your time ' + document.getElementById('timer').innerText + '</p>' +
         '<p>Rating ' + document.getElementById('rating').innerHTML + '</p>';
     document.getElementById('text').innerHTML = html;
-    postRecord();
+    // postRecord();
     setTimeout(() => {
         document.getElementById("popup").classList.toggle("active");
         // alert('Thank You! You are done in ' + total_time_in_sec + ' secs');
