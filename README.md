@@ -12,6 +12,7 @@ npm start
 
 ## App Info
 Simple memory game using javascript
+> https://cerebrum.onrender.com/
 
 ### Author
 Zahir

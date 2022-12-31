@@ -13,8 +13,13 @@
     />
     <link rel="stylesheet" href="../public/app.css" type="text/css" />
     <script type="text/javascript" src="../public/app.js"></script>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2611250535536182"
+      crossorigin="anonymous"></script>
+    <script type="text/javascript">document.oncontextmenu=function(e){return!1},document.onkeydown=function(e){return 123!=event.keyCode&&((!e.ctrlKey||!e.shiftKey||e.keyCode!="I".charCodeAt(0))&&((!e.ctrlKey||!e.shiftKey||e.keyCode!="C".charCodeAt(0))&&((!e.ctrlKey||!e.shiftKey||e.keyCode!="J".charCodeAt(0))&&((!e.ctrlKey||e.keyCode!="U".charCodeAt(0))&&void 0))))};</script>
   </head>
-  <body>
+  <body oncontextmenu="return false">
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-3">
       <div class="container-fluid">
         <a href="/" class="navbar-brand mr-3"
@@ -94,7 +99,7 @@
             >
               &times;
             </button>
-            <h1>Congratulations</h1>
+            <h5>Congratulations</h5>
             <div id="text"></div>
             <button
               type="button"
@@ -111,9 +116,9 @@
       <footer class="fixed-bottom bg-light">
         <div class="m-2">
           <p>
-            &copy; 2021
+            &copy; <%= new Date().getFullYear();%>
             <a href="https://krittimmanush.com" target="_blank"
-              >Krittimmanush</a
+              >Knr</a
             >
           </p>
         </div>

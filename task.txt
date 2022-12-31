@@ -1,4 +1,0 @@
-1. design project structure
-2. frontend design login page, main page
-3. login system with session
-4. system design
