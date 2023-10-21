@@ -15,8 +15,7 @@ Simple memory game using javascript
 > https://cerebrum.onrender.com/
 
 ### Author
-Zahir
-[Krittimmanush](http://www.krittimmanush.com)
+[Zahir](http://www.krittimmanush.com)
 
 ### Version
 1.0.0
