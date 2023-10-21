@@ -12,7 +12,7 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="../public/app.css" type="text/css" />
-    <script type="text/javascript" src="../public/app.js"></script>
+    <script type="text/javascript" src="../public/app.js?v=1.0.0"></script>
     <script
       async
       src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2611250535536182"
@@ -33,62 +33,73 @@
       </div>
     </nav>
     <div class="container">
-      <div class="jumbotron row">
-        <div class="col-8">
-          <form id="form_record" class="form-inline" method="POST">
-            <div class="form-group mx-sm-3 mb-2 mr-2">
-              <select
-                class="form-control form-control-sm"
-                id="size"
-                name="size"
-                onchange="initBoard()"
-              >
-                <option value="" disabled selected="selected">
-                  Select Grid
-                </option>
-                <option value="3">3 X 3</option>
-                <option value="4">4 X 4</option>
-                <option value="6">6 X 6</option>
-                <option value="8">8 X 8</option>
-              </select>
-            </div>
-            <button
-              type="button"
-              id="btn_restart"
-              class="btn btn-outline-info btn-sm mb-2"
-              onclick="initBoard()"
-              disabled
-            >
-              Restart
-            </button>
-            <input
-              type="hidden"
-              id="form_user"
-              name="userId"
-              value="<%= userId %>"
-            />
-          </form>
-        </div>
-        <div class="col-4">
-          <p class="text">Best: <span id="record"></span></p>
-        </div>
-      </div>
       <div class="card d-none" id="playground">
         <div class="card-header">
-          <span id="timer">0 mins 0 secs</span>
-          <span class="float-right">
-            <span id="move">0</span> moves |
-            <span id="rating"
-              ><i class="far fa-star"></i><i class="far fa-star"></i
-              ><i class="far fa-star"></i
-            ></span>
-          </span>
+          <div class="row">
+            <div class="col-8">
+              <form id="form_record" class="form-inline" method="POST">
+                <div class="form-group mx-sm-3 mb-2 mr-2">
+                  <select
+                    class="form-control form-control-sm"
+                    id="size"
+                    name="size"
+                    onchange="initBoard()"
+                  >
+                    <option value="" disabled>
+                      Select Grid
+                    </option>
+                    <option value="3" selected>3 X 3</option>
+                    <option value="4">4 X 4</option>
+                    <option value="6">6 X 6</option>
+                    <option value="8">8 X 8</option>
+                  </select>
+                </div>
+                <div class="d-grid gap-2">
+                  <button
+                  type="button"
+                  id="btn_restart"
+                  class="btn btn-outline-info btn-sm mb-2"
+                  onclick="initBoard()"
+                  disabled
+                  >
+                    Restart
+                  </button>
+                  <input
+                    type="hidden"
+                    id="form_user"
+                    name="userId"
+                    value="<%= userId %>"
+                  />
+                </div>
+              </form>
+            </div>
+            <div class="col-4">
+              <p class="text">Best: <span id="record"></span></p>
+              <span id="timer">0 mins 0 secs</span> | 
+              <span>
+                <span id="move">0</span> moves |
+                <span id="rating"
+                  ><i class="far fa-star"></i><i class="far fa-star"></i
+                  ><i class="far fa-star"></i
+                ></span>
+              </span>
+            </div>
+          </div>
         </div>
         <div class="card-body bg-dark mx-auto" id="board">
           <!-- <% for(let i=0; i < 9; i++) { %>
                 <button class="tile btn btn-secondary" data="<%= i %>" id="show_<%= i %>"><i id="icon_<%= i %>"
                         class="d-none fa fa-play fa-2x"></i></button>
                 <% } %> -->
+        </div>
+        <div class="card-footer">
+          <p>
+            <ul class="font-italic">
+              <li>Start the game by flipping a card.</li>
+              <li>There are always two card with identical symbol.</li>
+              <li>Try to find another card that has the same symbol.</li>
+            </ul>
+          </p>
         </div>
         <div class="popup" id="popup">
           <div class="overlay"></div>
@@ -118,11 +129,12 @@
           <p>
             &copy; <%= new Date().getFullYear();%>
             <a href="https://krittimmanush.com" target="_blank"
-              >Knr</a
+              >Zahir</a
             >
           </p>
         </div>
       </footer>
     </div>
+    <script>initBoard()</script>
   </body>
 </html>

@@ -16,6 +16,7 @@ const initBoard = () => {
     document.getElementById("btn_restart").removeAttribute("disabled");
     document.getElementById("playground").classList.remove("d-none");
     size = Number(document.getElementById('size').value);
+    console.log(size);
     getRecord(size);
     if (size >= 3) {
         playgroundWidth = document.getElementById("playground").offsetWidth;
